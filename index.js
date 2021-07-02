@@ -3,9 +3,8 @@ const { body, checkSchema, validationResult } = require('express-validator');
 const fs = require('fs');
 const fsp = fs.promises;
 require('dotenv').config();
-const formSchema = require('./formSchema.sample');
-
-
+const formSchema = require(__dirname + '/' + process.env.SCHEMA_FILE);
+const mf = require('./mailerfuncs');
 
 module.exports = [
     checkSchema(formSchema),
@@ -24,7 +23,7 @@ module.exports = [
             });
         }else{
             console.log('success');
-            sendnotifications(req);
+            mf.sendEnquiryEmail(req);
             res.status(200).json({
                 success: true,
                 message: 'Registration successful'

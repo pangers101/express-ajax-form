@@ -13,7 +13,7 @@ let fields = {
 }
 
 
-function getFields(){
+function getFields(req){
     let fields = {};
     if(req.body){
         //if POST value emailfields exists...
@@ -32,8 +32,8 @@ function getFields(){
     }
 }
 
-function createEnquiryEmail(){
-    
+function createEnquiryEmail(req){
+    let fields = getFields(req);
     return email = {
         from    : process.env.SMTP_FROM,
         to      : process.env.SITE_EMAIL,
@@ -55,12 +55,12 @@ function createEnquiryEmail(){
     }
 }
 
-async function sendEnquiryEmail(){
+async function sendEnquiryEmail(req){
     try{
         //await a 'true' for the config being correct
         await verifyConfig();
         //await the email being sent successfully.
-        await transporter.sendMail(createEnquiryEmail());
+        await transporter.sendMail(createEnquiryEmail(req));
         console.log('email sent successfully');
         return true;
     }catch(err){
