@@ -71,7 +71,7 @@ async function sendEnquiryEmail(req){
 }
 
 function getTransporter(){
-    return nodemailer.createTransport({
+    let mailObj = {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT,
         secure: process.env.SMTP_SECURE, // upgrade later with STARTTLS
@@ -83,7 +83,9 @@ function getTransporter(){
         tls: { 
             rejectUnauthorized: false 
         }
-      });      
+      }
+    //console.log(mailObj);
+    return nodemailer.createTransport(mailObj);      
 }
 
 //returns a promise - resolves to 'true' if config valid, 'false' if invalid.
