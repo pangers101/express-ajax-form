@@ -16,10 +16,11 @@ let fields = {
 function getFields(req){
     let fields = {};
     if(req.body){
+        //console.log(req.body);
         //if POST value emailfields exists...
         let fieldArray = [];
         if(req.body.emailfields){
-            fieldArray = emailfields.split(",");
+            fieldArray = req.body.emailfields.split(",");
         }
         for(let key in req.body){
             if(fieldArray.includes(key)){
