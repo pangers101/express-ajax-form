@@ -3,6 +3,7 @@ const { body, checkSchema, validationResult } = require('express-validator');
 const fs = require('fs');
 const fsp = fs.promises;
 require('dotenv').config();
+//console.log(__dirname + '/' + process.env.SCHEMA_FILE);
 const formSchema = require(__dirname + '/' + process.env.SCHEMA_FILE);
 const mf = require('./mailerfuncs');
 
