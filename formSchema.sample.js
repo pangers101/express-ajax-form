@@ -1,3 +1,4 @@
+//^[\w\s]+$
 let formSchema = {
     custname: {
         trim: true,
@@ -8,7 +9,9 @@ let formSchema = {
                 min: 1, max: 50 
             }
         },
-        isAlpha: 'en-gb',
+        matches: {
+            options: [/^[\w\s]+$/, 'g']
+        },
         errorMessage: "Please enter your name."
     },
     email: {
