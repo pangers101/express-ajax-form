@@ -84,8 +84,14 @@ async function storeJSON(req){
     try{
         let fields = getFields(req);
         if(fields){
-            await fsp.appendFile(__dirname + '/log/jsonenquiries.json', JSON.stringify(fields));
-            console.log('written JSON file for enquiry');
+            await fs.appendFile(__dirname + '/log/jsonenquiries.json', JSON.stringify(fields), { encoding: 'utf8', flag: 'a'},  (err) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log('written JSON file for enquiry');
+                }
+            });
+            
         }
         return true;
     }catch(e){
