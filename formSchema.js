@@ -9,7 +9,6 @@ let formSchema = {
                 min: 1, max: 50 
             }
         },
-        isAlpha: 'en-gb',
         errorMessage: "Please enter your name."
     },
     email: {
