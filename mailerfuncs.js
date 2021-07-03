@@ -2,7 +2,8 @@ const nodemailer = require('nodemailer');
 const config = require('dotenv').config();
 const transporter = getTransporter();
 const h2t = require('html-to-text');
-
+const fs = require('fs');
+const fsp = fs.promises;
 
 //replace these with req.body
 let fields = {
@@ -23,7 +24,10 @@ function getFields(req){
             fieldArray = req.body.emailfields.split(",");
         }
         for(let key in req.body){
-            if(fieldArray.includes(key)){
+            if(fieldArray.includes(key) && req.body.emailfields){
+                fields[key] = req.body[key];
+            }else if(!req.body.emailfields){
+                //there was no list of email fields, so add all fields
                 fields[key] = req.body[key];
             }
         }
@@ -65,6 +69,7 @@ async function sendEnquiryEmail(req){
         //await a 'true' for the config being correct
         await verifyConfig();
         //await the email being sent successfully.
+        await storeJSON(req);
         await transporter.sendMail(createEnquiryEmail(req));
         console.log('email sent successfully');
         return true;
@@ -73,6 +78,19 @@ async function sendEnquiryEmail(req){
         return false;
     }
     //store json record in file
+}
+
+async function storeJSON(req){
+    try{
+        let fields = getFields(req);
+        if(fields){
+            await fsp.appendFile(__dirname + '/log/jsonenquiries.json', JSON.stringify(fields));
+            console.log('written JSON file for enquiry');
+        }
+        return true;
+    }catch(e){
+        console.log(e);
+    }
 }
 
 function getTransporter(){
