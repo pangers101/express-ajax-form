@@ -35,7 +35,7 @@ function getFields(req){
 
 function createEnquiryEmail(req){
     let fields = getFields(req);
-    return email = {
+    let email = {
         from    : process.env.SMTP_FROM,
         to      : process.env.SITE_EMAIL,
         subject : 'Website Enquiry from ' + process.env.SITE_NAME,
@@ -54,6 +54,10 @@ function createEnquiryEmail(req){
             return h2t.convert(this.html);
         }
     }
+    if(process.env.CC_EMAIL){
+        email.cc = process.env.CC_EMAIL;
+    }
+    return email;
 }
 
 async function sendEnquiryEmail(req){
