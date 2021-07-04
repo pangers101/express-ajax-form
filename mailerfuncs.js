@@ -60,7 +60,7 @@ async function sendEnquiryEmail(req){
         //await a 'true' for the config being correct
         await verifyConfig();
         //await the email being sent successfully.
-        await storeJSON(req);
+        await storeJSON(req, true);
         await transporter.sendMail(createEnquiryEmail(req));
         console.log('email sent successfully');
         return true;
@@ -71,11 +71,17 @@ async function sendEnquiryEmail(req){
     //store json record in file
 }
 
-async function storeJSON(req){
+/* 2nd param is 'true' if request is valid, false if it's rejected */
+async function storeJSON(req, valid = true){
     try{
+        if(valid === true){
+            let file = '/jsonenquiries.json';
+        }else{
+            let file = '/jsonfailedenquiries.json';
+        }
         let fields = getFields(req);
         if(fields){
-            await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + '/jsonenquiries.json', JSON.stringify(fields) + '\n', { flag: 'a' })         
+            await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + file, JSON.stringify(fields) + '\n', { flag: 'a' })         
             console.log('written JSON file for enquiry');            
         }
         return true;
