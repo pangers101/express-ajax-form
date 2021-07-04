@@ -5,6 +5,8 @@ const h2t = require('html-to-text');
 const fs = require('fs');
 const fsp = fs.promises;
 
+
+
 function getFields(req){
     let fields = {};
     if(req.body){
@@ -74,16 +76,18 @@ async function sendEnquiryEmail(req){
 /* 2nd param is 'true' if request is valid, false if it's rejected */
 async function storeJSON(req, valid = true){
     try{
+        let theFile;
         if(valid === true){
-            let file = '/jsonenquiries.json';
+            theFile = "/jsonenquiries.json";
         }else{
-            let file = '/jsonfailedenquiries.json';
+            theFile = "/jsonfailedenquiries.json";
         }
+
         let fields = getFields(req);
         
         if(fields){
             fields.time = new Date().toLocaleString();
-            await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + file, JSON.stringify(fields) + '\n', { flag: 'a' })         
+            await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + theFile, JSON.stringify(fields) + '\n', { flag: 'a' })         
             console.log('written JSON file for enquiry');            
         }
         return true;
