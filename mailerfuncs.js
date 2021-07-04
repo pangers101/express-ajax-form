@@ -5,15 +5,6 @@ const h2t = require('html-to-text');
 const fs = require('fs');
 const fsp = fs.promises;
 
-//replace these with req.body
-let fields = {
-    custname: 'Bla Bla',
-    email:  'exampleemail@gmail.com',
-    phone: '09870987988',
-    message:    'I\'d like to order some chocolate! :)'
-}
-
-
 function getFields(req){
     let fields = {};
     if(req.body){
@@ -74,8 +65,8 @@ async function sendEnquiryEmail(req){
         console.log('email sent successfully');
         return true;
     }catch(err){
-        console.log(err.message);
-        return false;
+        console.log(err);
+        throw new Error(err);
     }
     //store json record in file
 }
@@ -84,14 +75,8 @@ async function storeJSON(req){
     try{
         let fields = getFields(req);
         if(fields){
-            await fs.appendFile(__dirname + '/log/jsonenquiries.json', JSON.stringify(fields), { encoding: 'utf8', flag: 'a'},  (err) => {
-                if(err){
-                    console.log(err);
-                }else{
-                    console.log('written JSON file for enquiry');
-                }
-            });
-            
+            await fsp.appendFile(__dirname + '/log/jsonenquiries.json', JSON.stringify(fields), { flag: 'a' })         
+            console.log('written JSON file for enquiry');            
         }
         return true;
     }catch(e){
