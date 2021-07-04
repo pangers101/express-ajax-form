@@ -3,12 +3,13 @@ const { body, checkSchema, validationResult } = require('express-validator');
 const fs = require('fs');
 const fsp = fs.promises;
 require('dotenv').config();
+
 //console.log(__dirname + '/' + process.env.SCHEMA_FILE);
 
 //Use the following line only if locally installed 'express-ajax-form'
 //const formSchema = require(__dirname + '/' + process.env.SCHEMA_FILE);
 
-const formSchema = require('./' + process.env.SCHEMA_FILE);
+const formSchema = require(process.cwd() + '/' + process.env.SCHEMA_FILE);
 
 const mf = require('./mailerfuncs');
 
