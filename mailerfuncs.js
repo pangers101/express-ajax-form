@@ -87,7 +87,10 @@ async function storeJSON(req, valid = true){
         
         if(fields){
             fields.time = new Date().toLocaleString();
-            await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + theFile, JSON.stringify(fields) + '\n', { flag: 'a' })         
+            
+            await fsp.appendFile('./' + process.env.LOGS_FOLDER + theFile, JSON.stringify(fields) + '\n', { flag: 'a' })         
+            //Only use the following line if locally installed express-ajax-form with 'npm link'
+            //await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + theFile, JSON.stringify(fields) + '\n', { flag: 'a' })         
             console.log('written JSON file for enquiry');            
         }
         return true;

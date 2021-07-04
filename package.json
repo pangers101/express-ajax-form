@@ -1,6 +1,6 @@
 {
   "name": "express-ajax-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplifying creating AJAX forms for Express. Sends submissions by email, and stores logs of successful and failed submissions.",
   "main": "index.js",
   "scripts": {
