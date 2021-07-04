@@ -19,6 +19,8 @@ module.exports = [
 
             if (!errors.isEmpty() || timeError) {
                 console.log('failure');
+                //store the failed JSON but don't email it
+                mf.storeJSON(req,false);
                 res.status(200).json({
                     //Only send the first error for each field
                     errors: errors.mapped(),

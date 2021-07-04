@@ -121,5 +121,6 @@ async function verifyConfig(){
 module.exports = {
     sendEnquiryEmail,
     verifyConfig,
-    createEnquiryEmail
+    createEnquiryEmail,
+    storeJSON
 }
