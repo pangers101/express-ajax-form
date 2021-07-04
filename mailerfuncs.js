@@ -80,7 +80,9 @@ async function storeJSON(req, valid = true){
             let file = '/jsonfailedenquiries.json';
         }
         let fields = getFields(req);
+        
         if(fields){
+            fields.time = new Date().toLocaleString();
             await fsp.appendFile(__dirname + '/' + process.env.LOGS_FOLDER + file, JSON.stringify(fields) + '\n', { flag: 'a' })         
             console.log('written JSON file for enquiry');            
         }
