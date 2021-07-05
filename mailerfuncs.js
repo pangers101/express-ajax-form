@@ -127,9 +127,15 @@ async function verifyConfig(){
     }
 }
 
+async function rawVerifyConfig(){   
+    return await transporter.verify();
+}
+
+
 module.exports = {
     sendEnquiryEmail,
     verifyConfig,
     createEnquiryEmail,
-    storeJSON
+    storeJSON,
+    rawVerifyConfig
 }

@@ -12,8 +12,8 @@ require('dotenv').config();
 const formSchema = require(process.cwd() + '/' + process.env.SCHEMA_FILE);
 
 const mf = require('./mailerfuncs');
-
-module.exports = [
+module.exports.verify = mf.rawVerifyConfig;
+module.exports.middleware = [
     checkSchema(formSchema),
     function processForm(req, res, next){
         try{
